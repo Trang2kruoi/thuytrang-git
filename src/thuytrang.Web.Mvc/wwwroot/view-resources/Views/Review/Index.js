@@ -4,9 +4,6 @@
     var _$modal = $('#ReviewCreateModal');
     var _$form = _$modal.find('form');
 
-    // ========================
-    // DATATABLE
-    // ========================
     var _$reviewsTable = _$table.DataTable({
         paging: true,
         serverSide: true,
