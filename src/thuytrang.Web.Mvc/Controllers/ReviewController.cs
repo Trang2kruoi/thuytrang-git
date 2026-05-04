@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using thuytrang.Controllers;
 using thuytrang.Reviews;
 
-namespace thuytrang.Web.Controllers // Thêm namespace để tránh lỗi hệ thống
+namespace thuytrang.Web.Controllers
 {
     public class ReviewController : thuytrangControllerBase
     {
@@ -15,13 +15,13 @@ namespace thuytrang.Web.Controllers // Thêm namespace để tránh lỗi hệ t
             _reviewAppService = reviewAppService;
         }
 
-        public IActionResult Index() => View();
+        public ActionResult Index() => View();
 
-        // Sửa int thành long ở tham số truyền vào
-        public async Task<ActionResult> EditModal(long reviewId)
+        // Bắt buộc dùng int để khớp với hệ thống
+        public async Task<ActionResult> EditModal(int reviewId)
         {
-            // Sửa EntityDto<int> thành EntityDto<long>
-            var review = await _reviewAppService.GetAsync(new EntityDto<long>(reviewId));
+            // Lấy dữ liệu review cũ theo Id để fill vào Modal
+            var review = await _reviewAppService.GetAsync(new EntityDto<int>(reviewId));
             return PartialView("_EditModal", review);
         }
     }

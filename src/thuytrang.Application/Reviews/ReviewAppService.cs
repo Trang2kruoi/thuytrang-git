@@ -4,10 +4,9 @@ using thuytrang.Reviews.Dto;
 
 namespace thuytrang.Reviews
 {
-    // Đổi tất cả int thành long để khớp với Entity Review (Id kiểu long)
-    public class ReviewAppService : AsyncCrudAppService<Review, ReviewDto, long, PagedReviewResultRequestDto, CreateReviewDto, ReviewDto>, IReviewAppService
+    public class ReviewAppService : AsyncCrudAppService<Review, ReviewDto, int, PagedReviewResultRequestDto, CreateReviewDto, ReviewDto>, IReviewAppService
     {
-        public ReviewAppService(IRepository<Review, long> repository)
+        public ReviewAppService(IRepository<Review, int> repository)
             : base(repository)
         {
         }

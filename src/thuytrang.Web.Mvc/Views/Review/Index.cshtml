@@ -1,12 +1,10 @@
 ﻿@using thuytrang.Web.Startup
-@using thuytrang.Web.Models.Common.Modals
 @{
     ViewBag.CurrentPageName = PageNames.Reviews;
 }
 
 @section scripts {
     <environment names="Development,Staging,Production">
-        @* Đảm bảo load đúng thư viện cần thiết cho DataTable *@
         <script src="~/view-resources/Views/Review/Index.js" asp-append-version="true"></script>
     </environment>
 }
@@ -31,12 +29,12 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    @* Quan trọng: ID phải khớp với file Index.js *@
                     <table id="ReviewsTable" class="table table-striped table-bordered nowrap">
                         <thead>
                             <tr>
+                                <th>Tiêu đề</th>
                                 <th>Nội dung</th>
-                                <th>Đánh giá (Sao)</th>
+                                <th>Đánh giá</th>
                                 <th>Trạng thái</th>
                                 <th style="width: 150px">Thao tác</th>
                             </tr>
@@ -49,9 +47,5 @@
     </div>
 </section>
 
-@* Load Modal thêm mới *@
 @await Html.PartialAsync("_CreateModal.cshtml")
-
-@* Nơi chứa Modal chỉnh sửa khi bấm nút Sửa *@
 <div id="ReviewEditModalContainer"></div>
-<script src="~/view-resources/Views/Review/Index.js" asp-append-version="true"></script>

@@ -10,7 +10,7 @@ namespace thuytrang.EntityFrameworkCore
     public class thuytrangDbContext : AbpZeroDbContext<Tenant, Role, User, thuytrangDbContext>
     {
         /* Define a DbSet for each entity of the application */
-        public DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
 
         public thuytrangDbContext(DbContextOptions<thuytrangDbContext> options)
             : base(options)
