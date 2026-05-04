@@ -3,18 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using thuytrang.Authorization.Roles;
 using thuytrang.Authorization.Users;
 using thuytrang.MultiTenancy;
-using thuytrang.Reviews; // Đảm bảo có dòng này để nhận diện class Review
+using thuytrang.Reviews;
 
-namespace thuytrang.EntityFrameworkCore
+public class thuytrangDbContext : AbpZeroDbContext<Tenant, Role, User, thuytrangDbContext>
 {
-    public class thuytrangDbContext : AbpZeroDbContext<Tenant, Role, User, thuytrangDbContext>
-    {
-        /* Define a DbSet for each entity of the application */
-        public virtual DbSet<Review> Reviews { get; set; }
+    // Thêm dòng này
+    public virtual DbSet<Review> Reviews { get; set; }
 
-        public thuytrangDbContext(DbContextOptions<thuytrangDbContext> options)
-            : base(options)
-        {
-        }
+    public thuytrangDbContext(DbContextOptions<thuytrangDbContext> options)
+        : base(options)
+    {
     }
 }

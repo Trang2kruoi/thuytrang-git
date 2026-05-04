@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using thuytrang.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using thuytrang.EntityFrameworkCore;
 namespace thuytrang.Migrations
 {
     [DbContext(typeof(thuytrangDbContext))]
-    partial class thuytrangDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260504072517_Add_Review_Columns")]
+    partial class Add_Review_Columns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
