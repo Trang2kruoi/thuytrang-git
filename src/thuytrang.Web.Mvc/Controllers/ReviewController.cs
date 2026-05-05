@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using thuytrang.Controllers;
 using thuytrang.Reviews;
@@ -18,10 +19,10 @@ namespace thuytrang.Web.Controllers
         public ActionResult Index() => View();
 
         // Bắt buộc dùng int để khớp với hệ thống
-        public async Task<ActionResult> EditModal(int reviewId)
+        public async Task<ActionResult> EditModal(Guid reviewId)
         {
-            // Lấy dữ liệu review cũ theo Id để fill vào Modal
-            var review = await _reviewAppService.GetAsync(new EntityDto<int>(reviewId));
+            // Sửa EntityDto<int> thành EntityDto<Guid>
+            var review = await _reviewAppService.GetAsync(new EntityDto<Guid>(reviewId));
             return PartialView("_EditModal", review);
         }
     }

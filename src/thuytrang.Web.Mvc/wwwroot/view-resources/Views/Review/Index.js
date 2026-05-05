@@ -4,13 +4,12 @@
     var _$form = _$modal.find('form');
     var _$table = $('#ReviewsTable');
 
-    // 1. KHỞI TẠO BẢNG DATATABLE (HIỂN THỊ DỮ LIỆU)
+    // 1. DATATABLE
     var _$reviewsTable = _$table.DataTable({
         paging: true,
         serverSide: true,
-        // THÊM DÒNG NÀY ĐỂ FIX LỖI "Unknown button type: print"
         buttons: [],
-        ajax: function (data, callback, settings) {
+        ajax: function (data, callback) {
             var filter = {
                 maxResultCount: data.length,
                 skipCount: data.start
@@ -36,11 +35,9 @@
                 render: function (data) {
                     var rating = data || 0;
                     var stars = '';
-                    // Vẽ sao vàng
                     for (var i = 0; i < rating; i++) {
                         stars += '<i class="fas fa-star text-warning"></i>';
                     }
-                    // Vẽ sao xám (cho đủ 5 sao)
                     for (var j = rating; j < 5; j++) {
                         stars += '<i class="far fa-star text-warning"></i>';
                     }
@@ -58,11 +55,14 @@
             {
                 data: null,
                 sortable: false,
-                autoWidth: false,
-                defaultContent: '',
                 render: function (data, type, row) {
-                    return `<button class="btn btn-sm btn-secondary edit-review" data-id="${row.id}"><i class="fas fa-pencil-alt"></i> Sửa</button> 
-                            <button class="btn btn-sm btn-danger delete-review" data-id="${row.id}"><i class="fas fa-trash"></i> Xóa</button>`;
+                    return `
+                        <button class="btn btn-sm btn-secondary edit-review" data-id="${row.id}">
+                            <i class="fas fa-pencil-alt"></i> Sửa
+                        </button>
+                        <button class="btn btn-sm btn-danger delete-review" data-id="${row.id}">
+                            <i class="fas fa-trash"></i> Xóa
+                        </button>`;
                 }
             }
         ]
@@ -70,7 +70,7 @@
 
     _$form.validate();
 
-    // 2. XỬ LÝ NÚT LƯU LẠI (TẠO MỚI)
+    // 2. CREATE (FIX Ở ĐÂY)
     _$modal.find('.save-button').click(function (e) {
         e.preventDefault();
 
@@ -81,19 +81,18 @@
         var review = _$form.serializeFormToObject();
         abp.ui.setBusy(_$modal);
 
-        _reviewService.create(review).done(function () {
+        // ✅ FIX: dùng createOrEdit thay vì create
+        _reviewService.createOrEdit(review).done(function () {
             _$modal.modal('hide');
             _$form[0].reset();
             abp.notify.info('Lưu đánh giá thành công!');
-
-            // Tải lại bảng ngay lập tức
             _$reviewsTable.ajax.reload();
         }).always(function () {
             abp.ui.clearBusy(_$modal);
         });
     });
 
-    // 3. XỬ LÝ NÚT XÓA
+    // 3. DELETE
     _$table.on('click', '.delete-review', function () {
         var reviewId = $(this).attr("data-id");
 
@@ -111,7 +110,7 @@
         );
     });
 
-    // 4. XỬ LÝ NÚT SỬA (MỞ MODAL EDIT)
+    // 4. EDIT
     _$table.on('click', '.edit-review', function (e) {
         var reviewId = $(this).attr("data-id");
         e.preventDefault();
@@ -123,7 +122,31 @@
             success: function (content) {
                 $('#ReviewEditModalContainer').html(content);
                 $('#ReviewEditModal').modal('show');
+
+                $('#ReviewEditModal')
+                    .off('click', '.save-button')
+                    .on('click', '.save-button', function (e) {
+                        e.preventDefault();
+
+                        var form = $('#ReviewEditModal').find('form');
+
+                        if (!form.valid()) {
+                            return;
+                        }
+
+                        var review = form.serializeFormToObject();
+                        abp.ui.setBusy($('#ReviewEditModal'));
+
+                        _reviewService.createOrEdit(review).done(function () {
+                            $('#ReviewEditModal').modal('hide');
+                            abp.notify.success('Cập nhật đánh giá thành công!');
+                            _$reviewsTable.ajax.reload();
+                        }).always(function () {
+                            abp.ui.clearBusy($('#ReviewEditModal'));
+                        });
+                    });
             }
         });
     });
+
 })(jQuery);

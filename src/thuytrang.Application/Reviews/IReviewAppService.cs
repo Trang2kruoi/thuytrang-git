@@ -1,10 +1,18 @@
 ﻿using Abp.Application.Services;
+using Abp.Application.Services.Dto;
+using System;
+using System.Threading.Tasks;
 using thuytrang.Reviews.Dto;
 
 namespace thuytrang.Reviews
 {
-    // Kế thừa IAsyncCrudAppService sẽ tự động có các hàm: Get, GetAll, Create, Update, Delete
-    public interface IReviewAppService : IAsyncCrudAppService<ReviewDto, int, PagedReviewResultRequestDto, CreateReviewDto, ReviewDto>
+    public interface IReviewAppService : IApplicationService
     {
+        Task CreateOrEdit(CreateReviewDto input);
+        Task Delete(EntityDto<Guid> input);
+        Task<PagedResultDto<ReviewDto>> GetAll(PagedReviewResultRequestDto input);
+
+        // CHÈN THÊM DÒNG NÀY ĐỂ HẾT LỖI
+        Task<ReviewDto> GetAsync(EntityDto<Guid> input);
     }
 }

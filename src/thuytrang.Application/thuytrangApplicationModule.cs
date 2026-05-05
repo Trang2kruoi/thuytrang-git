@@ -6,7 +6,7 @@ using thuytrang.Authorization;
 namespace thuytrang
 {
     [DependsOn(
-        typeof(thuytrangCoreModule), 
+        typeof(thuytrangCoreModule),
         typeof(AbpAutoMapperModule))]
     public class thuytrangApplicationModule : AbpModule
     {

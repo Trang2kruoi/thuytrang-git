@@ -5,9 +5,6 @@ using thuytrang.Authorization;
 
 namespace thuytrang.Web.Startup
 {
-    /// <summary>
-    /// This class defines menus for the application.
-    /// </summary>
     public class thuytrangNavigationProvider : NavigationProvider
     {
         public override void SetNavigation(INavigationProviderContext context)
