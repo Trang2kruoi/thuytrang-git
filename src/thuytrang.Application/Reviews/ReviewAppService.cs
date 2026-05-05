@@ -2,7 +2,7 @@
 using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
-using Abp.UI; // ✅ THÊM DÒNG NÀY (fix lỗi build)
+using Abp.UI; 
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using thuytrang.Reviews.Dto;
 
 namespace thuytrang.Reviews
 {
-    [AbpAuthorize]
+    [AbpAuthorize] //khai báo và khởi tạo Service ở tầng Application
     public class ReviewAppService : thuytrangAppServiceBase, IReviewAppService
     {
         private readonly IRepository<Review, Guid> _reviewRepository;
@@ -22,14 +22,14 @@ namespace thuytrang.Reviews
             _reviewRepository = reviewRepository;
         }
 
-        // GET DETAIL
+        // phân trang
         public async Task<ReviewDto> GetAsync(EntityDto<Guid> input)
         {
             var review = await _reviewRepository.GetAsync(input.Id);
             return ObjectMapper.Map<ReviewDto>(review);
         }
 
-        // CREATE OR EDIT
+        // tạo và chỉnh sửa
         public async Task CreateOrEdit(CreateReviewDto input)
         {
             if (input.Id.HasValue)
@@ -45,13 +45,13 @@ namespace thuytrang.Reviews
             }
         }
 
-        // DELETE
+        // xoá
         public async Task Delete(EntityDto<Guid> input)
         {
             await _reviewRepository.DeleteAsync(input.Id);
         }
 
-        // GET ALL (đã chống lỗi)
+        // GET ALL
         public async Task<PagedResultDto<ReviewDto>> GetAll(PagedReviewResultRequestDto input)
         {
             try
@@ -61,7 +61,7 @@ namespace thuytrang.Reviews
                 var totalCount = await query.CountAsync();
 
                 var list = await query
-                    .OrderByDescending(x => x.Id) // dùng Id cho chắc
+                    .OrderByDescending(x => x.Id)
                     .PageBy(input)
                     .ToListAsync();
 

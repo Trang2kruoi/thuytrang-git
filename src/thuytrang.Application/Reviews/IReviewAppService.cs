@@ -11,8 +11,6 @@ namespace thuytrang.Reviews
         Task CreateOrEdit(CreateReviewDto input);
         Task Delete(EntityDto<Guid> input);
         Task<PagedResultDto<ReviewDto>> GetAll(PagedReviewResultRequestDto input);
-
-        // CHÈN THÊM DÒNG NÀY ĐỂ HẾT LỖI
         Task<ReviewDto> GetAsync(EntityDto<Guid> input);
     }
 }

@@ -17,6 +17,6 @@ namespace thuytrang.Reviews
         [Range(1, 5)]
         public int Rating { get; set; }       // Số sao (1-5)
 
-        public bool IsActive { get; set; } = true; // ✅ default tránh lỗi null
+        public bool IsActive { get; set; } = true; 
     }
 }

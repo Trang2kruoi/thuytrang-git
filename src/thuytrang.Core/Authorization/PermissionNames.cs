@@ -9,10 +9,6 @@
 
         // Chức năng Đánh giá (Reviews)
         public const string Pages_Reviews = "Pages.Reviews";
-
-        // (Tùy chọn) Thêm các quyền con nếu cần thiết:
-        // public const string Pages_Reviews_Create = "Pages.Reviews.Create";
-        // public const string Pages_Reviews_Edit = "Pages.Reviews.Edit";
-        // public const string Pages_Reviews_Delete = "Pages.Reviews.Delete";
+        
     }
 }

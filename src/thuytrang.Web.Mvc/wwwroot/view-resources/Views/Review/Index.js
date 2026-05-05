@@ -4,7 +4,7 @@
     var _$form = _$modal.find('form');
     var _$table = $('#ReviewsTable');
 
-    // 1. DATATABLE
+    // 1. Phân trang (..)
     var _$reviewsTable = _$table.DataTable({
         paging: true,
         serverSide: true,
@@ -70,7 +70,7 @@
 
     _$form.validate();
 
-    // 2. CREATE (FIX Ở ĐÂY)
+    // 2.thêm mới
     _$modal.find('.save-button').click(function (e) {
         e.preventDefault();
 
@@ -81,7 +81,6 @@
         var review = _$form.serializeFormToObject();
         abp.ui.setBusy(_$modal);
 
-        // ✅ FIX: dùng createOrEdit thay vì create
         _reviewService.createOrEdit(review).done(function () {
             _$modal.modal('hide');
             _$form[0].reset();
@@ -92,7 +91,7 @@
         });
     });
 
-    // 3. DELETE
+    // 3.xoá
     _$table.on('click', '.delete-review', function () {
         var reviewId = $(this).attr("data-id");
 
@@ -110,7 +109,7 @@
         );
     });
 
-    // 4. EDIT
+    // 4. chỉnh sửa
     _$table.on('click', '.edit-review', function (e) {
         var reviewId = $(this).attr("data-id");
         e.preventDefault();
